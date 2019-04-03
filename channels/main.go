@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -22,13 +23,19 @@ func main() {
 		//go + func  : run the func with new goroutine
 		go checkLink(link, c)
 	}
-
+	//wait for the channel
 	for L := range c {
-		go checkLink(L, c)
+
+		//go checkLink(L, c)
+		go func(link string) {
+			time.Sleep(5 * time.Second)
+			checkLink(link, c)
+		}(L)
 	}
 }
 
 func checkLink(link string, c chan string) {
+	//time.Sleep(5 * time.Second)
 	_, err := http.Get(link)
 
 	if err != nil {
