@@ -33,7 +33,6 @@ func main() {
 		}(L)
 	}
 }
-
 func checkLink(link string, c chan string) {
 	//time.Sleep(5 * time.Second)
 	_, err := http.Get(link)
